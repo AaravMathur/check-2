@@ -1,4 +1,4 @@
-name: Main Pipeline
+name: Fail If Secrets Missing
 
 on:
   push:
@@ -6,12 +6,25 @@ on:
       - main
 
 jobs:
-  call-task-group:
-    uses: ./.github/workflows/task-group.yml
-    with:
-      STAGE_NAME: "Deploy"
-      STAGE_VAR: "deploy-stage"
-    secrets:
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      API_KEY: ${{ secrets.API_KEY }}
+  check-secrets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fail if DB_PASSWORD is not set
+        run: |
+          if [ -z "${{ secrets.DB_PASSWORD }}" ]; then
+            echo "❌ DB_PASSWORD is not set!"
+            exit 1
+          fi
+
+      - name: Fail if API_KEY is not set
+        run: |
+          if [ -z "${{ secrets.API_KEY }}" ]; then
+            echo "❌ API_KEY is not set!"
+            exit 1
+          fi
+
+      - name: Echo Secrets
+        run: |
+          echo "✅ DB_PASSWORD and API_KEY are set"
 

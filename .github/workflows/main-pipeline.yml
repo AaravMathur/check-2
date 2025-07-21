@@ -1,4 +1,4 @@
-name: Task 3 - Scoped Variables with Reusable Tasks
+name: Main Pipeline with Task Groups
 
 on:
   push:
@@ -6,17 +6,15 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build Stage
-    uses: ./.github/workflows/reusable-task.yml
+  Build:
+    uses: ./.github/workflows/task-group.yml
     with:
-      STAGE_NAME: build
-      STAGE_VAR: build-value
+      STAGE_NAME: "Build"
+      STAGE_VAR: "build-value"
 
-  deploy:
-    name: Deploy Stage
-    uses: ./.github/workflows/reusable-task.yml
+  Deploy:
+    uses: ./.github/workflows/task-group.yml
     with:
-      STAGE_NAME: deploy
-      STAGE_VAR: deploy-value
+      STAGE_NAME: "Deploy"
+      STAGE_VAR: "deploy-value"
 

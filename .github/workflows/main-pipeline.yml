@@ -1,4 +1,4 @@
-name: Main Pipeline with Task Groups
+name: Main Pipeline With Staged Variables
 
 on:
   push:
@@ -6,15 +6,19 @@ on:
       - main
 
 jobs:
-  Build:
+  build:
     uses: ./.github/workflows/task-group.yml
     with:
       STAGE_NAME: "Build"
       STAGE_VAR: "build-value"
+    secrets:
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}  # Set in GitHub > Settings > Secrets
 
-  Deploy:
+  deploy:
     uses: ./.github/workflows/task-group.yml
     with:
       STAGE_NAME: "Deploy"
       STAGE_VAR: "deploy-value"
+    secrets:
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 

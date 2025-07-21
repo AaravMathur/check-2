@@ -9,6 +9,9 @@ on:
       STAGE_VAR:
         required: true
         type: string
+    secrets:
+      DB_PASSWORD:
+        required: false  # Optional for this demo
 
 jobs:
   run-stage:
@@ -18,4 +21,5 @@ jobs:
         run: |
           echo "Stage Name: ${{ inputs.STAGE_NAME }}"
           echo "Stage Variable: ${{ inputs.STAGE_VAR }}"
+          echo "Optional Secret: ${{ secrets.DB_PASSWORD || 'No Secret Provided' }}"
 

@@ -11,15 +11,21 @@ on:
         type: string
     secrets:
       DB_PASSWORD:
-        required: false  # Optional for this demo
+        required: true
+      API_KEY:
+        required: true
 
 jobs:
   run-stage:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo Stage Info
+      - name: Print Inputs
         run: |
           echo "Stage Name: ${{ inputs.STAGE_NAME }}"
           echo "Stage Variable: ${{ inputs.STAGE_VAR }}"
-          echo "Optional Secret: ${{ secrets.DB_PASSWORD || 'No Secret Provided' }}"
+
+      - name: Print Secrets
+        run: |
+          echo "DB_PASSWORD is: ${{ secrets.DB_PASSWORD }}"
+          echo "API_KEY is: ${{ secrets.API_KEY }}"
 

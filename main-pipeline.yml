@@ -1,0 +1,22 @@
+name: Task 3 - Scoped Variables with Reusable Tasks
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Stage
+    uses: ./.github/workflows/reusable-task.yml
+    with:
+      STAGE_NAME: build
+      STAGE_VAR: build-value
+
+  deploy:
+    name: Deploy Stage
+    uses: ./.github/workflows/reusable-task.yml
+    with:
+      STAGE_NAME: deploy
+      STAGE_VAR: deploy-value
+

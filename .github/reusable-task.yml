@@ -1,0 +1,21 @@
+name: Reusable Task Group
+
+on:
+  workflow_call:
+    inputs:
+      STAGE_NAME:
+        required: true
+        type: string
+      STAGE_VAR:
+        required: true
+        type: string
+
+jobs:
+  run-stage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Stage Info
+        run: |
+          echo "Stage Name: ${{ inputs.STAGE_NAME }}"
+          echo "Stage Variable: ${{ inputs.STAGE_VAR }}"
+

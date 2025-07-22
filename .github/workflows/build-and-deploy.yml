@@ -1,3 +1,10 @@
+name: Build and Deploy to AKS
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -41,4 +48,4 @@ jobs:
 
     - name: Deploy to AKS
       run: |
-        kubectl set image deployment/vprofile-deployment vprofile=${{ secrets.REGISTRY_NAME }}.azurecr.io/vprofileapp:${{ github.sha }}
+        kubectl set image deployment/vprofile-deployment vprofile=${{ secrets.REGISTRY_NAME }}.azurecr.io/vprofileapp:${{ github.sha }} --namespace default

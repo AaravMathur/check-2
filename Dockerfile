@@ -1,11 +1,18 @@
-# Use an OpenJDK base image
-FROM openjdk:17-jdk-slim
+# Use official Python base image
+FROM python:3.9-slim
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy jar file into the image
-COPY target/vprofileapp.jar app.jar
+# Copy dependency list
+COPY requirements.txt .
 
-# Run the JAR file
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy app code
+COPY . .
+
+# Run using gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+
